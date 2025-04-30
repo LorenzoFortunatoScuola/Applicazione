@@ -7,12 +7,12 @@ public class Project {
     
     private JFrame projectFrame;
     
-    public Project(){
-        Project();
+    public Project(String nomeFile){
+        Project(nomeFile);
     }
     
-    private void Project(){
-        projectFrame = new JFrame("Nuovo progetto");
+    private void Project(String nomeFile){
+        projectFrame = new JFrame(nomeFile);
         projectFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         projectFrame.setSize(600, 400);
         projectFrame.setLocationRelativeTo(null);
@@ -22,7 +22,11 @@ public class Project {
         Color buttonColor = new Color(100, 149, 237);
         Color textColor = new Color(25, 25, 112);
         
-        
+        JButton exitButton = new JButton("return to home");
+        exitButton.addActionListener(e ->{
+            projectFrame.dispose();
+            new Home();
+        });
         
         projectFrame.setVisible(true);
     }

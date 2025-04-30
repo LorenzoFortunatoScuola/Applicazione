@@ -45,7 +45,7 @@ public class Pagamento {
         pagamentoFrame.setVisible(true);
     }
 
-    private JPanel creaPiano(String titolo, String descrizione, Color textColor) {
+    static private JPanel creaPiano(String titolo, String descrizione, Color textColor) {
         JPanel panel = new JPanel();
         panel.setLayout(new BoxLayout(panel, BoxLayout.Y_AXIS));
         panel.setBackground(new Color(240, 248, 255));
