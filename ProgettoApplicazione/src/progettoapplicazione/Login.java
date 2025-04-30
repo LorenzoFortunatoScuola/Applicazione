@@ -12,7 +12,7 @@ public class Login {
     }
 
     private void Login() {
-        loginFrame = new JFrame("CleverCircuit Login");
+        loginFrame = new JFrame("CleverResolutor Login");
         loginFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         loginFrame.setSize(600, 400);
         loginFrame.setLocationRelativeTo(null);
@@ -28,7 +28,7 @@ public class Login {
         mainPanel.setBackground(backgroundColor);
 
         // Titolo principale
-        JLabel titleLabel = new JLabel("CIAO, BENVENUTO SU CLEVER CIRCUIT");
+        JLabel titleLabel = new JLabel("CIAO, BENVENUTO SU CLEVER RESOLUTOR");
         titleLabel.setFont(new Font("SansSerif", Font.BOLD, 24));
         titleLabel.setAlignmentX(Component.CENTER_ALIGNMENT);
         titleLabel.setForeground(textColor);

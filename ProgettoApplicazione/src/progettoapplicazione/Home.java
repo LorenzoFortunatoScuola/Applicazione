@@ -202,6 +202,14 @@ public class Home {
 
         JButton nuovoProgettoBtn = new JButton("Nuovo Progetto");
         JButton storicoBtn = new JButton("Storico Progetti");
+        nuovoProgettoBtn.addActionListener(e -> {
+            homeFrame.dispose(); // Chiude la finestra home
+            new Project(); // Avvia il progetto
+        });
+        storicoBtn.addActionListener(e -> {
+            homeFrame.dispose(); // Chiude la finestra home
+            new Storico(); // Avvia lo storico
+        });
 
         for (JButton btn : new JButton[]{nuovoProgettoBtn, storicoBtn}) {
             btn.setPreferredSize(new Dimension(200, 60));
