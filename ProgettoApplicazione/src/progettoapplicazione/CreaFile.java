@@ -1,5 +1,7 @@
 package progettoapplicazione;
 
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import javax.swing.*;
 
 public class CreaFile {
@@ -14,7 +16,7 @@ public class CreaFile {
         JTextField nomeFileField = new JTextField();
         JButton enter = new JButton("Invia");
         String nomeFile = "error";
-        enter.addActionListener(e ->{
+        enter.addActionListener(e-> {
             nomeFile = nomeFileField.getText();
         });
         return nomeFile;
