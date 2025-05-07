@@ -39,23 +39,41 @@ public class Project {
         projectFrame.setVisible(true);
     }
     
-    //esenpio di codice: Z = a or b;
+    //esempio di codice: a = 1; b = 0; Z = a or b;
     private int compila(String testo){
         ArrayList<Variabile> variabiliLocali = new ArrayList<>();
         String[] codice = testo.split(";");
         int risultato = 0;
         for (int i = 0; i < codice.length; i++) {
-            if(codice[i].equals("or")){
-                codice[i-3].setValue(cercaValore(codice[i - 1], variabiliLocali) + cercaValore(codice[i + 1], variabiliLocali));
-            }
-            if(codice.equals("a") || codice.equals("b") || codice.equals("c") || codice.equals("d") || codice.equals("e") || codice.equals("f") || codice.equals("g") || codice.equals("h") || codice.equals("i") || codice.equals("j") || codice.equals("k") || codice.equals("l") || codice.equals("m") || codice.equals("n") || codice.equals("o") || codice.equals("p") || codice.equals("q") || codice.equals("r") || codice.equals("s") || codice.equals("t") || codice.equals("u") || codice.equals("v") || codice.equals("w") || codice.equals("x") || codice.equals("y") || codice.equals("z")){
-                Variabile a= new Variabile(codice[i],99);
+            if(codice[i].equals("=")){
+                if(codice[i+2].equals("or") || codice[i+2].equals("and") || codice[i+2].equals("not")){
+                        switch(codice[i+2]){
+                            case "or":
+                                Variabile a = new Variabile(codice[i - 1], cercaValore(codice[i + 1], variabiliLocali) + cercaValore(codice[i + 3], variabiliLocali));
+                        }
+                }
             }
         }
         return risultato > 0 ? 1 : 0;
     }
     
     private int cercaValore(String var, ArrayList<Variabile> lista){
-        
+        Variabile a = null;
+        for (int i = 0; i < lista.size(); i++) {
+            if(var.equals(lista.get(i))){
+                a = new Variabile(var, lista.get(i).getValue());
+            }
+        }
+        return a.getValue();
+    }
+    
+    private Variabile cercaVariabile(String var, ArrayList<Variabile> lista){
+        Variabile a = null;
+        for (int i = 0; i < lista.size(); i++) {
+            if(var.equals(lista.get(i))){
+                a = new Variabile(var, lista.get(i).getValue());
+            }
+        }
+        return a;
     }
 }

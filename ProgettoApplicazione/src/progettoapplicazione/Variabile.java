@@ -13,7 +13,7 @@ public class Variabile {
     public void setValue(int n){
         valore = n;
     }
-    public int getValue(int n){
+    public int getValue(){
         return valore;
     }
 }
