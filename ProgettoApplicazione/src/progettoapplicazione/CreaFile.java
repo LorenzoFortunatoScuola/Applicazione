@@ -1,24 +1,42 @@
 package progettoapplicazione;
 
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
+import java.awt.*;
 import javax.swing.*;
 
 public class CreaFile {
     
-    private JFrame creaFileFrame;
+    private JFrame creaFileFrame = new JFrame();
     
     public CreaFile(){
         CreaFile();
     }
     
-    public String CreaFile(){
+    public void CreaFile(){
+        creaFileFrame.setSize(600, 400);
+        creaFileFrame.setLocationRelativeTo(null);
+
+        Color backgroundColor = new Color(240, 248, 255);
+        Color buttonColor = new Color(100, 149, 237);
+        Color textColor = new Color(25, 25, 112);
+
+        JPanel mainPanel = new JPanel();
+        mainPanel.setLayout(new BoxLayout(mainPanel, BoxLayout.Y_AXIS));
+        mainPanel.setBorder(BorderFactory.createEmptyBorder(150, 40, 150, 40));
+        mainPanel.setBackground(backgroundColor);
+        
+        creaFileFrame.add(mainPanel);
+        
+        String nomeFile;
         JTextField nomeFileField = new JTextField();
-        JButton enter = new JButton("Invia");
-        String nomeFile = "error";
-        enter.addActionListener(e-> {
-            nomeFile = nomeFileField.getText();
+        mainPanel.add(nomeFileField);
+        nomeFile = nomeFileField.getText();
+        
+        JButton creabtn= new JButton("crea");
+        mainPanel.add(creabtn);
+        creabtn.addActionListener(e->{
+            creaFileFrame.dispose();
+            new Project(nomeFile);
         });
-        return nomeFile;
+        creaFileFrame.setVisible(true);
     }
 }

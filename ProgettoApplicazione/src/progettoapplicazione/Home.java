@@ -203,8 +203,7 @@ public class Home {
         JButton nuovoProgettoBtn = new JButton("Nuovo Progetto");
         JButton storicoBtn = new JButton("Storico Progetti");
         nuovoProgettoBtn.addActionListener(e -> {
-            CreaFile a = new CreaFile(); // Avvia crazione del progetto
-            new Project(a.CreaFile()); // Avvia il progetto
+            CreaFile a = new CreaFile();
         });
         storicoBtn.addActionListener(e -> {
             new Storico(); // Avvia lo storico
