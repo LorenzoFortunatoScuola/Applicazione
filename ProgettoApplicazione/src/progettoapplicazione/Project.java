@@ -8,14 +8,14 @@ import javax.swing.*;
 public class Project {
     
     private JFrame projectFrame;
-    static File progetto;
+    static private File progetto;
     
-    public Project(String nomeFile) throws IOException{
-        Project(nomeFile);
+    public Project(String nomeFile, String code) throws IOException{
+        Project(nomeFile, code);
         progetto = new File(nomeFile);
     }
     
-    private void Project(String nomeFile) throws IOException{
+    private void Project(String nomeFile, String code) throws IOException{
         projectFrame.setSize(600, 400);
         projectFrame.setLocationRelativeTo(null);
 
@@ -37,7 +37,7 @@ public class Project {
             new Home();
         });
         
-        JTextField codice = new JTextField();
+        JTextField codice = new JTextField(code);
         mainPanel.add(codice);
         
         JButton avvia = new JButton("|>");
@@ -53,7 +53,7 @@ public class Project {
         BufferedWriter writer = new BufferedWriter(new FileWriter(progetto));
         salva.addActionListener(e->{
             try {
-                writer.write(testo);
+                writer.write("(" + nomeFile +")/n" + testo);
             } catch (IOException ex) {
                 ex.getMessage();
             }
@@ -118,5 +118,9 @@ public class Project {
             }
         }
         return a;
+    }
+    
+    static public File getFile(){
+        return progetto;
     }
 }

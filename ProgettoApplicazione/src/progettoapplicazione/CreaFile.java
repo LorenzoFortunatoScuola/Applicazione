@@ -2,6 +2,7 @@ package progettoapplicazione;
 
 import java.awt.*;
 import java.io.IOException;
+import java.util.*;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.*;
@@ -9,6 +10,7 @@ import javax.swing.*;
 public class CreaFile {
     
     private JFrame creaFileFrame = new JFrame();
+    static Scanner input = new Scanner(System.in);
     
     public CreaFile(){
         CreaFile();
@@ -32,6 +34,7 @@ public class CreaFile {
         String nomeFile;
         JTextField nomeFileField = new JTextField();
         mainPanel.add(nomeFileField);
+        input.next();
         nomeFile = nomeFileField.getText();
         
         JButton creabtn= new JButton("crea");
@@ -39,7 +42,7 @@ public class CreaFile {
         creabtn.addActionListener(e->{
             creaFileFrame.dispose();
             try {
-                new Project(nomeFile);
+                new Project(nomeFile, "");
             } catch (IOException ex) {
                 Logger.getLogger(CreaFile.class.getName()).log(Level.SEVERE, null, ex);
             }

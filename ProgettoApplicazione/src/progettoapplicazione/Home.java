@@ -200,7 +200,7 @@ public class Home {
         JButton nuovoProgettoBtn = new JButton("Nuovo Progetto");
         JButton storicoBtn = new JButton("Storico Progetti");
         nuovoProgettoBtn.addActionListener(e -> {
-            CreaFile a = new CreaFile();
+            new CreaFile();
             homeFrame.dispose();
         });
         storicoBtn.addActionListener(e -> {
