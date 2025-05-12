@@ -7,6 +7,7 @@ public class Storico {
     
     private JFrame storicoFrame;
     
+    
     public Storico(){
         Storico();
     }
@@ -21,6 +22,8 @@ public class Storico {
         Color backgroundColor = new Color(240, 248, 255);
         Color buttonColor = new Color(100, 149, 237);
         Color textColor = new Color(25, 25, 112);
+        
+        
         
         storicoFrame.setVisible(true);
     }

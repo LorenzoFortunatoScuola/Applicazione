@@ -1,18 +1,21 @@
 package progettoapplicazione;
 
 import java.awt.*;
+import java.io.*;
 import java.util.*;
 import javax.swing.*;
 
 public class Project {
     
     private JFrame projectFrame;
+    static File progetto;
     
-    public Project(String nomeFile){
+    public Project(String nomeFile) throws IOException{
         Project(nomeFile);
+        progetto = new File(nomeFile);
     }
     
-    private void Project(String nomeFile){
+    private void Project(String nomeFile) throws IOException{
         projectFrame.setSize(600, 400);
         projectFrame.setLocationRelativeTo(null);
 
@@ -40,14 +43,27 @@ public class Project {
         JButton avvia = new JButton("|>");
         mainPanel.add(avvia);
         avvia.addActionListener(e->{
-            compila(codice.getText());
+            new Risultato(compila(codice.getText()));
+        });
+        
+        String testo = codice.getText();
+        
+        JButton salva = new JButton("Salva");
+        mainPanel.add(salva);
+        BufferedWriter writer = new BufferedWriter(new FileWriter(progetto));
+        salva.addActionListener(e->{
+            try {
+                writer.write(testo);
+            } catch (IOException ex) {
+                ex.getMessage();
+            }
         });
         
         projectFrame.setVisible(true);
     }
     
     //esempio di codice: a = 1; b = 0; Z = a or b;
-    private int compila(String testo){
+    private String compila(String testo){
         ArrayList<Variabile> variabiliLocali = new ArrayList<>();
         String[] codice = testo.split(";");
         int risultato = 0;
@@ -71,9 +87,17 @@ public class Project {
                                 variabiliLocali.add(c);
                         }
                 }
+                if (codice[i+2].equals(";")){
+                    if(cercaVariabile(codice[i+2],variabiliLocali)!=null){
+                        Variabile a = new Variabile(codice[i-1], cercaValore(codice[i + 1],variabiliLocali));
+                    }
+                    else{
+                        Variabile a = new Variabile(codice[i-1], Integer.parseInt(codice[i + 1]));
+                    }
+                }
             }
         }
-        return risultato > 0 ? 1 : 0;
+        return risultato > 0 ? "1" : "0";
     }
     
     private int cercaValore(String var, ArrayList<Variabile> lista){

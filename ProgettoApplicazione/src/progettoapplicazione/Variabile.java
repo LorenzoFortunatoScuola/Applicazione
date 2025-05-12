@@ -16,4 +16,7 @@ public class Variabile {
     public int getValue(){
         return valore;
     }
+    public String getNome(){
+        return nome;
+    }
 }

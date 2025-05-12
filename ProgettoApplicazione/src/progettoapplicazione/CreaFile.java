@@ -1,6 +1,9 @@
 package progettoapplicazione;
 
 import java.awt.*;
+import java.io.IOException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.*;
 
 public class CreaFile {
@@ -35,7 +38,11 @@ public class CreaFile {
         mainPanel.add(creabtn);
         creabtn.addActionListener(e->{
             creaFileFrame.dispose();
-            new Project(nomeFile);
+            try {
+                new Project(nomeFile);
+            } catch (IOException ex) {
+                Logger.getLogger(CreaFile.class.getName()).log(Level.SEVERE, null, ex);
+            }
         });
         creaFileFrame.setVisible(true);
     }

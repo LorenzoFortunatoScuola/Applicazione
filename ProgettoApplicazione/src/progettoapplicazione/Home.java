@@ -2,9 +2,6 @@ package progettoapplicazione;
 
 import javax.swing.*;
 import java.awt.*;
-import javax.swing.event.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 
 public class Home {
 
@@ -204,6 +201,7 @@ public class Home {
         JButton storicoBtn = new JButton("Storico Progetti");
         nuovoProgettoBtn.addActionListener(e -> {
             CreaFile a = new CreaFile();
+            homeFrame.dispose();
         });
         storicoBtn.addActionListener(e -> {
             new Storico(); // Avvia lo storico
