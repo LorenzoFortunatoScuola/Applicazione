@@ -13,7 +13,7 @@ public class GestioneAccount extends JPanel {
         emailLabel.setFont(new Font("SansSerif", Font.BOLD, 18));
         emailLabel.setAlignmentX(Component.CENTER_ALIGNMENT);
 
-        JTextField emailField = new JTextField("utente@esempio.com");
+        JTextField emailField = new JTextField("utente@esempio.com"); //una volta implementato l'accesso con google automaticamente viene inserita quella del proprio account
         emailField.setMaximumSize(new Dimension(300, 30));
         emailField.setHorizontalAlignment(JTextField.CENTER);
         emailField.setEditable(false);
@@ -35,7 +35,32 @@ public class GestioneAccount extends JPanel {
         cambiaPasswordBtn.setFont(new Font("SansSerif", Font.BOLD, 16));
 
         cambiaPasswordBtn.addActionListener(e -> {
-            JOptionPane.showMessageDialog(homeFrame, "Funzione di cambio password in sviluppo");
+            JPanel panel = new JPanel(new GridLayout(0, 1));
+            JPasswordField newPasswordField = new JPasswordField();
+            JPasswordField confirmPasswordField = new JPasswordField();
+
+            panel.add(new JLabel("Nuova Password:"));
+            panel.add(newPasswordField);
+            panel.add(new JLabel("Conferma Password:"));
+            panel.add(confirmPasswordField);
+
+            int result = JOptionPane.showConfirmDialog(homeFrame, panel, "Cambia Password",
+                    JOptionPane.OK_CANCEL_OPTION, JOptionPane.PLAIN_MESSAGE);
+
+            if (result == JOptionPane.OK_OPTION) {
+                String nuovaPassword = new String(newPasswordField.getPassword());
+                String confermaPassword = new String(confirmPasswordField.getPassword());
+
+                if (nuovaPassword.isEmpty() || confermaPassword.isEmpty()) {
+                    JOptionPane.showMessageDialog(homeFrame, "I campi non possono essere vuoti.", "Errore", JOptionPane.ERROR_MESSAGE);
+                } else if (!nuovaPassword.equals(confermaPassword)) {
+                    JOptionPane.showMessageDialog(homeFrame, "Le password non coincidono.", "Errore", JOptionPane.ERROR_MESSAGE);
+                } else {
+                    // Aggiorna visivamente la password nel campo (dimostrativo)
+                    passwordField.setText(nuovaPassword);
+                    JOptionPane.showMessageDialog(homeFrame, "Password aggiornata con successo.");
+                }
+            }
         });
 
         add(Box.createVerticalStrut(20));

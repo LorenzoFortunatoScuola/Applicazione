@@ -94,7 +94,7 @@ public class Home {
             contattiFrame.setSize(400, 300);
             contattiFrame.setLocationRelativeTo(homeFrame);
             contattiFrame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-            
+
             // Crea il pannello dei contatti
             Contatti contattiPanel = new Contatti(homeFrame);
             contattiFrame.add(contattiPanel);
@@ -109,7 +109,6 @@ public class Home {
 
         // Sottomenu Impostazioni
         JMenu impostazioniSubMenu = new JMenu("Impostazioni");
-        JMenuItem temaItem = new JMenuItem("Tema");
         JMenuItem lingueItem = new JMenuItem("Lingue e località");
         JMenuItem notificheItem = new JMenuItem("Notifiche");
         JMenuItem privacyItem = new JMenuItem("Privacy");
@@ -162,18 +161,16 @@ public class Home {
         });
 
         // Impostazioni - Azioni con nuove finestre
-        temaItem.addActionListener(e -> openSettingsWindow("Tema"));
-        lingueItem.addActionListener(e -> openSettingsWindow("Lingue e località"));
-        notificheItem.addActionListener(e -> openSettingsWindow("Notifiche"));
-        privacyItem.addActionListener(e -> openSettingsWindow("Privacy"));
-        versioneItem.addActionListener(e -> openSettingsWindow("Versione"));
+        lingueItem.addActionListener(e -> openSettingsWindow("Lingue e località", "Configura le lingue e la località"));
+        notificheItem.addActionListener(e -> openSettingsWindow("Notifiche", "Nessuna notifica al momento"));
+        privacyItem.addActionListener(e -> openSettingsWindow("Privacy", "Imposta le tue preferenze sulla privacy"));
+        versioneItem.addActionListener(e -> openSettingsWindow("Versione", "Versione 1.0.0.0"));
 
         // Aggiungi gli elementi al menu
         accountSubMenu.add(logoutItem);
         accountSubMenu.add(eliminaAccountItem);
         accountSubMenu.add(cambiaAccountItem);
 
-        impostazioniSubMenu.add(temaItem);
         impostazioniSubMenu.add(lingueItem);
         impostazioniSubMenu.add(notificheItem);
         impostazioniSubMenu.add(privacyItem);
@@ -204,7 +201,7 @@ public class Home {
             homeFrame.dispose();
         });
         storicoBtn.addActionListener(e -> {
-            new Storico(); // Avvia lo storico
+            //new Storico(); // Avvia lo storico
         });
 
         for (JButton btn : new JButton[]{nuovoProgettoBtn, storicoBtn}) {
@@ -224,8 +221,11 @@ public class Home {
         homeFrame.setVisible(true);
     }
 
-    // Funzione per aprire la finestra delle impostazioni
-    private void openSettingsWindow(String settingType) {
+    // Variabili statiche per memorizzare la lingua e la località selezionate
+    private static String selectedLanguage = "Italiano";  // Lingua di default
+    private static String selectedLocation = "Italia";    // Località di default
+
+    private void openSettingsWindow(String settingType, String customMessage) {
         JFrame settingsFrame = new JFrame(settingType);
         settingsFrame.setSize(400, 300);
         settingsFrame.setLocationRelativeTo(homeFrame);
@@ -234,23 +234,124 @@ public class Home {
         JPanel panel = new JPanel();
         panel.setLayout(new BorderLayout());
 
-        JLabel label = new JLabel("Impostazioni per: " + settingType, SwingConstants.CENTER);
-        label.setFont(new Font("SansSerif", Font.BOLD, 18));
+        // Solo se NON è Notifiche, Tema o Versione aggiungiamo l’intestazione in alto
+        if (!settingType.equals("Notifiche") && !settingType.equals("Tema") && !settingType.equals("Versione")) {
+            JLabel label = new JLabel(customMessage, SwingConstants.CENTER);
+            label.setFont(new Font("SansSerif", Font.BOLD, 18));
+            panel.add(label, BorderLayout.NORTH);
+        }
 
-        panel.add(label, BorderLayout.CENTER);
+        if (settingType.equals("Privacy")) {
+            JPanel centerPanel = new JPanel(new GridLayout(3, 1, 10, 10));
+            JCheckBox cookiesCheckBox = new JCheckBox("Accetta i Cookies", true);
+            JCheckBox notificationsCheckBox = new JCheckBox("Abilita notifiche", true);
+            JCheckBox dataUsageCheckBox = new JCheckBox("Consento l'utilizzo dei miei dati", true);
+            centerPanel.add(cookiesCheckBox);
+            centerPanel.add(notificationsCheckBox);
+            centerPanel.add(dataUsageCheckBox);
+
+            panel.add(centerPanel, BorderLayout.CENTER);
+
+            JPanel bottomPanel = new JPanel();
+            JButton saveButton = new JButton("Salva");
+            saveButton.addActionListener(e -> {
+                JOptionPane.showMessageDialog(settingsFrame,
+                        "Preferenze salvate:\nCookies: " + (cookiesCheckBox.isSelected() ? "Accettato" : "Rifiutato")
+                        + "\nNotifiche: " + (notificationsCheckBox.isSelected() ? "Abilitato" : "Disabilitato")
+                        + "\nUtilizzo dati: " + (dataUsageCheckBox.isSelected() ? "Consentito" : "Non consentito"));
+                settingsFrame.dispose();
+            });
+            bottomPanel.add(saveButton);
+            panel.add(bottomPanel, BorderLayout.SOUTH);
+
+        } else if (settingType.equals("Lingue e località")) {
+            JPanel centerPanel = new JPanel(new GridLayout(2, 2, 10, 10));
+
+            JLabel languageLabel = new JLabel("Seleziona la lingua:");
+            String[] languages = {"Italiano", "English", "Français", "Deutsch"};
+            JComboBox<String> languageComboBox = new JComboBox<>(languages);
+            languageComboBox.setSelectedItem(selectedLanguage);
+
+            JLabel locationLabel = new JLabel("Seleziona la località:");
+            String[] locations = {"Italia", "USA", "Francia", "Germania"};
+            JComboBox<String> locationComboBox = new JComboBox<>(locations);
+            locationComboBox.setSelectedItem(selectedLocation);
+
+            centerPanel.add(languageLabel);
+            centerPanel.add(languageComboBox);
+            centerPanel.add(locationLabel);
+            centerPanel.add(locationComboBox);
+
+            panel.add(centerPanel, BorderLayout.CENTER);
+
+            JPanel bottomPanel = new JPanel();
+            JButton saveButton = new JButton("Salva");
+            saveButton.addActionListener(e -> {
+                selectedLanguage = (String) languageComboBox.getSelectedItem();
+                selectedLocation = (String) locationComboBox.getSelectedItem();
+                JOptionPane.showMessageDialog(settingsFrame,
+                        "Lingua: " + selectedLanguage + "\nLocalità: " + selectedLocation);
+                settingsFrame.dispose();
+            });
+            bottomPanel.add(saveButton);
+            panel.add(bottomPanel, BorderLayout.SOUTH);
+
+        } else if (settingType.equals("Notifiche")) {
+            // Solo un'etichetta al centro per le notifiche
+            JLabel centerLabel = new JLabel("Nessuna notifica al momento", SwingConstants.CENTER);
+            centerLabel.setFont(new Font("SansSerif", Font.PLAIN, 16));
+            panel.add(centerLabel, BorderLayout.CENTER);
+
+        } else if (settingType.equals("Tema")) {
+            // Solo un'etichetta al centro per il tema
+            JLabel centerLabel = new JLabel("Personalizza il tema dell'applicazione", SwingConstants.CENTER);
+            centerLabel.setFont(new Font("SansSerif", Font.PLAIN, 16));
+            panel.add(centerLabel, BorderLayout.CENTER);
+
+        } else if (settingType.equals("Versione")) {
+            // Solo un'etichetta al centro per la versione
+            JLabel centerLabel = new JLabel("Versione 1.0.0.0", SwingConstants.CENTER);
+            centerLabel.setFont(new Font("SansSerif", Font.PLAIN, 16));
+            panel.add(centerLabel, BorderLayout.CENTER);
+
+        } else {
+            // Tema o Versione → messaggio generico al centro
+            JLabel centerLabel = new JLabel(customMessage, SwingConstants.CENTER);
+            centerLabel.setFont(new Font("SansSerif", Font.PLAIN, 16));
+            panel.add(centerLabel, BorderLayout.CENTER);
+        }
+
         settingsFrame.add(panel);
         settingsFrame.setVisible(true);
     }
 
     // MOSTRA ABOUT US
     private void showAboutUs() {
+
         centerPanel.removeAll();
 
-        JLabel aboutLabel = new JLabel("Qui parleremo un po' di noi...");
-        aboutLabel.setFont(new Font("SansSerif", Font.ITALIC, 20));
+        // Creazione del JLabel con il testo
+        JLabel aboutLabel = new JLabel("<html><div style='text-align: center;'>"
+                + "Chi Siamo<br><br>"
+                + "Siamo un team appassionato di logica digitale e informatica. La nostra applicazione è progettata per semplificare il processo di risoluzione delle porte logiche, offrendo uno strumento veloce e intuitivo per studenti, ingegneri e appassionati di elettronica.<br><br>"
+                + "Cosa Facciamo<br><br>"
+                + "Offriamo una soluzione semplice ed efficiente per risolvere combinazioni di porte logiche, con il supporto di grafici e analisi dettagliate per ogni espressione booleana. Il nostro obiettivo è rendere l'apprendimento e la progettazione delle logiche digitali più accessibile e immediato."
+                + "</div></html>");
+
+        // Impostazioni del font (più piccolo) e colore
+        aboutLabel.setFont(new Font("SansSerif", Font.ITALIC, 18));  // Font ridotto
         aboutLabel.setForeground(new Color(25, 25, 112));
-        centerPanel.setLayout(new GridBagLayout());
-        centerPanel.add(aboutLabel);
+
+        // Layout del pannello per centrare il JLabel
+        centerPanel.setLayout(new BoxLayout(centerPanel, BoxLayout.Y_AXIS));
+
+        // Aggiungi uno spazio verticale sopra il testo per posizionarlo in alto
+        centerPanel.add(Box.createVerticalStrut(20));  // Spazio ridotto per posizionarlo in alto
+        centerPanel.add(aboutLabel);  // Aggiungi il JLabel
+        centerPanel.add(Box.createVerticalStrut(20));  // Spazio ridotto sotto il testo
+
+        centerPanel.revalidate();
+        centerPanel.repaint();
 
         if (titlePanel.getComponentCount() == 1) {
             JLabel subtitle = new JLabel("ABOUT US");
@@ -264,28 +365,5 @@ public class Home {
         centerPanel.repaint();
         titlePanel.revalidate();
         titlePanel.repaint();
-    }
-
-    // Funzione per mostrare la home
-    private void Home() {
-        centerPanel.removeAll();  // Rimuovi i componenti esistenti
-        centerPanel.setLayout(new FlowLayout(FlowLayout.CENTER, 40, 100));
-
-        // Crea i bottoni per la home
-        JButton nuovoProgettoBtn = new JButton("Nuovo Progetto");
-        JButton storicoBtn = new JButton("Storico Progetti");
-
-        for (JButton btn : new JButton[]{nuovoProgettoBtn, storicoBtn}) {
-            btn.setPreferredSize(new Dimension(200, 60));
-            btn.setBackground(new Color(100, 149, 237));
-            btn.setForeground(Color.BLACK);
-            btn.setFont(new Font("SansSerif", Font.BOLD, 16));
-            btn.setFocusPainted(false);
-            btn.setBorder(BorderFactory.createEmptyBorder(10, 20, 10, 20));
-            centerPanel.add(btn);
-        }
-
-        centerPanel.revalidate();
-        centerPanel.repaint();
     }
 }

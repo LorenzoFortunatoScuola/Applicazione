@@ -35,11 +35,11 @@ public class Pagamento {
         mainPanel.add(Box.createRigidArea(new Dimension(0, 30)));
 
         // Piani 1, 2, 3
-        mainPanel.add(creaPiano("1. COPPER", "Descrizione dei vantaggi del piano Copper...", textColor));
+        mainPanel.add(creaPiano("1. COPPER - 10$/mese", "✅ Porte logiche combinatorie (AND, OR, NOT, NAND, NOR, XOR, XNOR)✅ Circuiti fino a 20 porte ✅ Salvataggi illimitati ✅ Esportazione in PNG ✅ Simulazione in tempo reale (combinatori) ✅ Supporto via email (entro 48h)", textColor));
         mainPanel.add(Box.createRigidArea(new Dimension(0, 20)));
-        mainPanel.add(creaPiano("2. ALLUMINIUM", "Descrizione dei vantaggi del piano Alluminium...", textColor));
+        mainPanel.add(creaPiano("2. ALLUMINIUM - 25$/mese", "✅ Tutto nel piano Copper ✅ Circuiti fino a 100 porte ✅ Supporto per circuiti sequenziali (flip-flop, latch, clock) ✅ Debug visivo dettagliato ✅ Esportazione in PDF e JSON ✅ Libreria di componenti personalizzabili ✅ Supporto prioritario (entro 24h)", textColor));
         mainPanel.add(Box.createRigidArea(new Dimension(0, 20)));
-        mainPanel.add(creaPiano("3. GOLD", "Descrizione dei vantaggi del piano Gold...", textColor));
+        mainPanel.add(creaPiano("3. GOLD - 50$/mese", "✅ Tutto nel piano Alluminium ✅ Circuiti illimitati e moduli annidati ✅ Simulazione avanzata con visualizzazione delle latenze ✅ Collaborazione in tempo reale (fino a 10 utenti) ✅ Accesso API per integrazioni esterne ✅ Hosting cloud dedicato (su richiesta) ✅ Supporto tecnico premium (entro 4h, canale dedicato)", textColor));
 
         pagamentoFrame.add(mainPanel);
         pagamentoFrame.setVisible(true);
